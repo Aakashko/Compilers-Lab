@@ -1,0 +1,13 @@
+import java_cup.runtime.*;
+	scan with {: return getScanner().next_token(); :}
+	terminal INTVAL,MULT,PLUS,MINUS,DIV,ID,EQUAL,NEWL,LPAREN,RPAREN,MOD,SEMI,EOFILE,DOT,OS,CS;
+
+	non terminal s,prog,stmt,exp;
+
+	precedence left PLUS,MINUS;
+	precedence left MULT,DIV,MOD;
+
+	s::=prog {: System.out.println("Valid Declaration"); System.exit(0); :} EOFILE {: System.exit(0); :};
+	prog::=prog stmt | stmt;
+	stmt::=ID EQUAL exp SEMI | ID EQUAL exp SEMI NEWL | ID DOT stmt | ID OS INTVAL CS EQUAL exp SEMI;
+	exp::= exp PLUS exp | exp MINUS exp | exp MULT exp | exp DIV exp | exp MOD exp | LPAREN exp RPAREN | INTVAL | ID;

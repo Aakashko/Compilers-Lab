@@ -1,0 +1,39 @@
+import java_cup.runtime.Symbol;
+import java_cup.runtime.Scanner;
+%%
+%cup
+%eofval{
+	return new Symbol(sym.EOFILE);
+%eofval}
+
+digit=[0-9]
+letter=[a-zA-Z]
+special=[!@$%^*()_+]
+whitespace=[\t\n\r]
+
+%%
+[0-9]+ {System.out.println("LA "+yytext());return new Symbol(sym.INTVAL,new  Integer(yytext()));}
+"*"	   {System.out.println("LA "+yytext());return new Symbol(sym.MULT);}
+"/"	   {System.out.println("LA "+yytext());return new Symbol(sym.DIV);}
+"+"	   {System.out.println("LA "+yytext());return new Symbol(sym.PLUS);}
+"-"	   {System.out.println("LA "+yytext());return new Symbol(sym.MINUS);}
+"%"	   {System.out.println("LA "+yytext());return new Symbol(sym.MOD);}
+"="	   {System.out.println("LA "+yytext());return new Symbol(sym.EQUAL);}
+">="   {System.out.println("LA "+yytext());return new Symbol(sym.GREATE);}
+"<="   {System.out.println("LA "+yytext());return new Symbol(sym.LESSE);}
+"<"	   {System.out.println("LA "+yytext());return new Symbol(sym.LESS);}
+">"	   {System.out.println("LA "+yytext());return new Symbol(sym.GREAT);}
+"=="   {System.out.println("LA "+yytext());return new Symbol(sym.EQ);}
+"!="   {System.out.println("LA "+yytext());return new Symbol(sym.NEQ);}
+[\n]   {System.out.println("LA "+yytext());return new Symbol(sym.NEWL);}
+"("	   {System.out.println("LA "+yytext());return new Symbol(sym.LPAREN);}
+")"	   {System.out.println("LA "+yytext());return new Symbol(sym.RPAREN);}
+";"	   {System.out.println("LA "+yytext());return new Symbol(sym.SEMI);}
+"."	   {System.out.println("LA "+yytext());return new Symbol(sym.DOT);}
+"["	   {System.out.println("LA "+yytext());return new Symbol(sym.OS);}
+"]"	   {System.out.println("LA "+yytext());return new Symbol(sym.CS);}
+"if"   {System.out.println("LA "+yytext());return new Symbol(sym.IF);}
+"else" {System.out.println("LA "+yytext());return new Symbol(sym.ELSE);}
+" "	   {System.out.println("LA "+yytext());return new Symbol(sym.SPACE);}
+[a-z][a-z0-9]* {System.out.println("LA "+yytext());
+return new Symbol(sym.ID,new String(yytext()));}

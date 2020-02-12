@@ -1,0 +1,34 @@
+import java_cup.runtime.Symbol; 
+import java_cup.runtime.Scanner; 
+%% 
+%cup
+%eofval{ 
+return new Symbol(sym.EOFILE);
+%eofval}
+
+digit=[0-9]
+letter=[a-zA-z]
+special=[!@$%^*()_+]
+whitespace=[\t\n\r]
+
+%% 
+"=" {System.out.println("LA "+yytext());return new Symbol(sym.EQUAL);}
+";"  {System.out.println("LA "+yytext());return new Symbol(sym.SEMI);} 
+","  {System.out.println("LA "+yytext());return new Symbol(sym.COMMA);} 
+" "  {System.out.println("LA "+yytext());return new Symbol(sym.SPACE);} 
+[0-9]+ {System.out.println("LA "+yytext());return new Symbol(sym.INTVAL,new  Integer(yytext()));} 
+{digit}+\.{digit}+ {System.out.println("LA "+yytext());return new Symbol(sym.FLOATVAL,new Float(yytext()));}
+\"({letter}|{digit}|{special})*\" {System.out.println("LA "+yytext());return new Symbol(sym.STRVAL,new String(yytext()));}
+"{" {System.out.println("LA "+yytext());return new Symbol(sym.OC);}
+"}" {System.out.println("LA "+yytext());return new Symbol(sym.CC);}
+"[" {System.out.println("LA "+yytext());return new Symbol(sym.OS);}
+"]" {System.out.println("LA "+yytext());return new Symbol(sym.CS);}
+"NULL" {System.out.println("LA "+yytext()); return new Symbol(sym.NULLVAL,null);}
+"int" {System.out.println("LA "+yytext());return new Symbol(sym.INT);} 
+"var" {System.out.println("LA "+yytext());return new Symbol(sym.VAR);}
+"string" {System.out.println("LA "+yytext());return new Symbol(sym.STRING);}
+"float" {System.out.println("LA "+yytext()); return new Symbol(sym.FLOAT);}
+"const" {System.out.println("LA "+yytext()); return new Symbol(sym.CONST);}
+[\n] {System.out.println("LA "+yytext());return new Symbol(sym.NEWL);}
+[a-z][a-z0-9]* {System.out.println("LA "+yytext());
+return new Symbol(sym.ID,new String(yytext()));}

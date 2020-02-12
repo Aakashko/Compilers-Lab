@@ -1,0 +1,17 @@
+import java_cup.runtime.*; 
+	scan with {: return getScanner().next_token(); :};
+	terminal INT,STRING,SEMI,COMMA,ID,SPACE,EOFILE,NEWL,EQUAL,INTVAL,VAR,STRVAL,OS,CS,OC,CC,FLOATVAL,FLOAT,CONST,NULLVAL;
+	non terminal prog, stmt, decln, s, varlistint, varliststr, varlistfloat, intVlist, strVlist, floatVlist;
+	s::=prog {: System.out.println("Valid declaration");System.exit(0); :} EOFILE {: System.exit(0); :};
+	prog::=prog stmt |stmt ;
+	stmt::=decln | decln NEWL;
+	decln::= VAR SPACE INT SPACE varlistint SEMI | VAR SPACE STRING SPACE varliststr SEMI | VAR SPACE FLOAT SPACE varlistfloat SEMI | CONST SPACE INT SPACE ID EQUAL INTVAL SEMI | CONST SPACE STRING SPACE ID EQUAL STRVAL SEMI | CONST SPACE FLOAT SPACE ID EQUAL FLOATVAL SEMI;
+	
+	varlistint::= ID COMMA varlistint | ID | ID EQUAL INTVAL COMMA varlistint | ID EQUAL INTVAL | ID EQUAL NULLVAL COMMA varlistint | ID EQUAL NULLVAL | ID OS INTVAL CS COMMA varlistint | ID OS INTVAL CS | ID OS INTVAL CS EQUAL OC intVlist CC | ID OS INTVAL CS EQUAL OC intVlist CC COMMA varlistint;
+	intVlist::= INTVAL | INTVAL COMMA intVlist;
+	
+	varliststr::= ID COMMA varliststr | ID | ID EQUAL STRVAL COMMA varliststr | ID EQUAL STRVAL | ID EQUAL NULLVAL COMMA varliststr | ID EQUAL NULLVAL | ID OS INTVAL CS COMMA varliststr | ID OS INTVAL CS | ID OS INTVAL CS EQUAL OC strVlist CC | ID OS INTVAL CS EQUAL OC strVlist CC COMMA varliststr;
+	strVlist::= STRVAL | STRVAL COMMA strVlist;
+	
+	varlistfloat::=ID COMMA varlistfloat | ID | ID EQUAL FLOATVAL COMMA varlistfloat | ID EQUAL FLOATVAL | ID EQUAL NULLVAL COMMA varlistfloat | ID EQUAL NULLVAL | ID OS INTVAL CS COMMA varlistfloat | ID OS INTVAL CS | ID OS INTVAL CS EQUAL floatVlist | ID OS INTVAL CS EQUAL OC floatVlist CC COMMA varlistfloat;
+	floatVlist::= FLOATVAL | FLOATVAL COMMA floatVlist;

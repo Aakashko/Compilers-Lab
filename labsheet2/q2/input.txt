@@ -1,0 +1,18 @@
+main()
+{
+var integer a,b,c;
+var string d;
+a = input();
+b = input();
+d=”abcd”
+if ( a>b) then
+ {
+  c =  a+b;
+ }
+else
+ {
+ c = a-b;
+ }
+output(c)
+output(d)
+}
